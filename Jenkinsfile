@@ -1,6 +1,6 @@
 def imageName = 'stephnangue/movies-loader'
-def registry = '982039600869.dkr.ecr.eu-central-1.amazonaws.com'
-def region = 'eu-central-1'
+def registry = 'https://982039600869.dkr.ecr.eu-central-1.amazonaws.com/stephnangue/movies-loader'
+def credentials = 'ecr:eu-central-1:jenkins_aws_id'
 
 node('workers'){
     stage('Checkout'){
@@ -19,8 +19,7 @@ node('workers'){
     }
 
     stage('Push'){
-        sh "aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${registry}/${imageName}"
-        docker.withRegistry("${registry}") {
+        docker.withRegistry("${registry}","${credentials}") {
             docker.image(imageName).push(commitID())
 
             if (env.BRANCH_NAME == 'develop') {
