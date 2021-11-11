@@ -1,5 +1,6 @@
 def imageName = 'stephnangue/movies-loader'
 def registry = 'https://982039600869.dkr.ecr.eu-central-1.amazonaws.com/stephnangue/movies-loader'
+def base_registry = '982039600869.dkr.ecr.eu-central-1.amazonaws.com/stephnangue/movies-loader'
 def credentials = 'ecr:eu-central-1:jenkins_aws_id'
 
 node('workers'){
@@ -30,7 +31,7 @@ node('workers'){
     }
 
     stage('Analyze'){
-        def scannedImage = "${registry}:${commitID()} ${workspace}/Dockerfile"
+        def scannedImage = "${base_registry}:${commitID()} ${workspace}/Dockerfile"
         writeFile file: 'images', text: scannedImage
         anchore name: 'images'
     }
