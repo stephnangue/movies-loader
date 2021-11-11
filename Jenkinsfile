@@ -28,6 +28,12 @@ node('workers'){
         }    
     }
 
+    stage('Analyze'){
+        def scannedImage = "${registry}:${commitID()} ${workspace}/Dockerfile"
+        writeFile file: 'images', text: scannedImage
+        anchore name: 'images'
+    }
+
 }
 
 def commitID() {
