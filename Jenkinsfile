@@ -6,7 +6,7 @@ node('workers'){
     stage('Checkout'){
         checkout scm
     }
-    
+
 
     stage('Unit Tests'){
         def imageTest= docker.build("${imageName}-test", "-f Dockerfile.test .")
@@ -22,10 +22,11 @@ node('workers'){
     stage('Push'){
         docker.withRegistry("${registry}","${credentials}") {
             docker.image(imageName).push(commitID())
-
+/*
             if (env.BRANCH_NAME == 'develop') {
                 docker.image(imageName).push('develop')
             }
+*/
         }    
     }
 
