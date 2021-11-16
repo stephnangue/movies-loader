@@ -29,6 +29,7 @@ node('workers'){
         }    
     }
 
+/*
     stage('Analyze'){
         def scannedImage = "${registry}:${commitID()} ${workspace}/Dockerfile"
         writeFile file: 'images', text: scannedImage
@@ -36,6 +37,7 @@ node('workers'){
     }
 
 }
+*/
 
 def commitID() {
     sh 'git rev-parse HEAD > .git/commitID'
