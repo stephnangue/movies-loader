@@ -29,14 +29,13 @@ node('workers'){
         }    
     }
 
+
     stage('Deploy'){
         if(env.BRANCH_NAME == 'develop'){
             build job: "watchlist-deployment/${env.BRANCH_NAME}"
         }
     }
     
-
-
 /*
     stage('Analyze'){
         def scannedImage = "${registry}:${commitID()} ${workspace}/Dockerfile"
@@ -44,7 +43,9 @@ node('workers'){
         anchore name: 'images'
     }
 */
+
 }
+
 
 def commitID() {
     sh 'git rev-parse HEAD > .git/commitID'
